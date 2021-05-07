@@ -1,8 +1,9 @@
-# Copyright 2010-2014 Gentoo Foundation
+# Copyright 2010-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 PROFILE_ARCH="mips64el"
 
 CHOST="mips64el-unknown-linux-gnu"
+RUSTHOST="mips64el-unknown-linux-gnuabi64"
 
 IUSE_IMPLICIT="-abi_mips_o32"
