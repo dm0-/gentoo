@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 VALA_USE_DEPEND="vapigen"
 VALA_MIN_API_VERSION=0.46
 
@@ -25,14 +25,15 @@ RDEPEND="
 	>=media-libs/harfbuzz-2.0.0:=[${MULTILIB_USEDEP}]
 	>=dev-libs/libxml2-2.9.1-r4:2[${MULTILIB_USEDEP}]
 	>=x11-libs/pango-1.38.0[${MULTILIB_USEDEP}]
-
 	introspection? ( >=dev-libs/gobject-introspection-0.10.8:= )
 "
-DEPEND="${RDEPEND}
-	>=virtual/rust-1.40[${MULTILIB_USEDEP}]
+DEPEND="${RDEPEND}"
+BDEPEND="
 	dev-util/glib-utils
 	>=sys-devel/gettext-0.19.8
+	x11-libs/gdk-pixbuf
 	virtual/pkgconfig
+	>=virtual/rust-1.40
 	vala? ( $(vala_depend) )
 "
 # >=gtk-doc-am-1.13, gobject-introspection-common, vala-common needed by eautoreconf
@@ -83,6 +84,7 @@ multilib_src_install() {
 }
 
 multilib_src_install_all() {
+	einstalldocs
 	find "${ED}" -name '*.la' -delete || die
 }
 
