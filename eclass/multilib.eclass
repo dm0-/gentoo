@@ -18,6 +18,7 @@ export MULTILIB_ABIS=${MULTILIB_ABIS:-"default"}
 export DEFAULT_ABI=${DEFAULT_ABI:-"default"}
 export CFLAGS_default
 export LDFLAGS_default
+export RUSTFLAGS_default
 export CHOST_default=${CHOST_default:-${CHOST}}
 export CTARGET_default=${CTARGET_default:-${CTARGET:-${CHOST_default}}}
 export RUSTHOST_default=${RUSTHOST_default:-${RUSTHOST}}
@@ -92,6 +93,12 @@ get_abi_CFLAGS() { get_abi_var CFLAGS "$@"; }
 # @DESCRIPTION:
 # Alias for 'get_abi_var LDFLAGS'
 get_abi_LDFLAGS() { get_abi_var LDFLAGS "$@"; }
+
+# @FUNCTION: get_abi_RUSTFLAGS
+# @USAGE: [ABI]
+# @DESCRIPTION:
+# Alias for 'get_abi_var RUSTFLAGS'
+get_abi_RUSTFLAGS() { get_abi_var RUSTFLAGS "$@"; }
 
 # @FUNCTION: get_abi_CHOST
 # @USAGE: [ABI]
@@ -507,6 +514,7 @@ multilib_toolchain_setup() {
 		PKG_CONFIG_PATH
 		PKG_CONFIG_SYSTEM_INCLUDE_PATH
 		PKG_CONFIG_SYSTEM_LIBRARY_PATH
+		RUSTFLAGS
 	)
 
 	# First restore any saved state we have laying around.
@@ -558,6 +566,7 @@ multilib_toolchain_setup() {
 		export PKG_CONFIG_PATH=${EPREFIX}/usr/share/pkgconfig
 		export PKG_CONFIG_SYSTEM_INCLUDE_PATH=${EPREFIX}/usr/include
 		export PKG_CONFIG_SYSTEM_LIBRARY_PATH=${EPREFIX}/$(get_libdir):${EPREFIX}/usr/$(get_libdir)
+		export RUSTFLAGS=$(get_abi_RUSTFLAGS $1)
 	fi
 }
 
